@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nouveau devis — EventEats Pro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <h1>Demande de devis</h1>
+  <p class="sub">Ce formulaire enregistre directement en base de données MySQL.</p>
+
+  {% if success %}
+    <div class="flash">Devis enregistré avec succès (n°{{ new_id }}).</div>
+  {% endif %}
+
+  <div class="card">
+    <form method="POST" action="{{ url_for('devis') }}">
+      <div class="form-group">
+        <label for="nom">Nom complet</label>
+        <input type="text" id="nom" name="nom" required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" required>
+      </div>
+      <div class="form-group">
+        <label for="date_evenement">Date de l'événement</label>
+        <input type="date" id="date_evenement" name="date_evenement">
+      </div>
+      <div class="form-group">
+        <label for="type_evenement">Type d'événement</label>
+        <select id="type_evenement" name="type_evenement">
+          <option>Mariage</option>
+          <option>Anniversaire</option>
+          <option>Événement d'entreprise</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="nombre_invites">Nombre d'invités</label>
+        <input type="number" id="nombre_invites" name="nombre_invites" min="1">
+      </div>
+      <div class="form-group">
+        <label for="adresse">Lieu de livraison</label>
+        <input type="text" id="adresse" name="adresse">
+      </div>
+      <div class="form-group">
+        <label for="message">Précisions</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+      <button type="submit">Enregistrer le devis</button>
+    </form>
+  </div>
+
+  <a class="back" href="{{ url_for('liste_devis') }}">Voir tous les devis enregistrés →</a>
+</div>
+</body>
+</html>

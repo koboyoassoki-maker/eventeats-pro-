@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tous les devis — EventEats Pro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>.wrap{max-width:900px;}</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Devis enregistrés</h1>
+  <p class="sub">{{ devis|length }} devis en base de données.</p>
+
+  <div class="card">
+    {% if devis %}
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Téléphone</th>
+          <th>Type</th>
+          <th>Invités</th>
+          <th>Date événement</th>
+          <th>Reçu le</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in devis %}
+        <tr>
+          <td>{{ d.id }}</td>
+          <td>{{ d.nom }}</td>
+          <td>{{ d.telephone }}</td>
+          <td>{{ d.type_evenement }}</td>
+          <td>{{ d.nombre_invites or '—' }}</td>
+          <td>{{ d.date_evenement or '—' }}</td>
+          <td>{{ d.date_creation.strftime('%d/%m/%Y %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="empty">Aucun devis enregistré pour l'instant.</p>
+    {% endif %}
+  </div>
+
+  <a class="back" href="{{ url_for('devis') }}">← Nouveau devis</a>
+</div>
+</body>
+</html>
