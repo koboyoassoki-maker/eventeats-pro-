@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modifier le devis #{{ devis.id }} — EventEats Pro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <h1>Modifier le devis #{{ devis.id }}</h1>
+  <p class="sub">Les changements sont enregistrés directement en base.</p>
+
+  <div class="card">
+    <form method="POST" action="{{ url_for('modifier_devis', devis_id=devis.id) }}">
+      <div class="form-group">
+        <label for="nom">Nom complet</label>
+        <input type="text" id="nom" name="nom" value="{{ devis.nom }}" required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" value="{{ devis.telephone }}" required>
+      </div>
+      <div class="form-group">
+        <label for="date_evenement">Date de l'événement</label>
+        <input type="date" id="date_evenement" name="date_evenement"
+               value="{{ devis.date_evenement.strftime('%Y-%m-%d') if devis.date_evenement else '' }}">
+      </div>
+      <div class="form-group">
+        <label for="type_evenement">Type d'événement</label>
+        <select id="type_evenement" name="type_evenement">
+          {% for option in ['Mariage', 'Anniversaire', "Événement d'entreprise", 'Autre'] %}
+          <option {% if devis.type_evenement == option %}selected{% endif %}>{{ option }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="nombre_invites">Nombre d'invités</label>
+        <input type="number" id="nombre_invites" name="nombre_invites" min="1" value="{{ devis.nombre_invites or '' }}">
+      </div>
+      <div class="form-group">
+        <label for="adresse">Lieu de livraison</label>
+        <input type="text" id="adresse" name="adresse" value="{{ devis.adresse or '' }}">
+      </div>
+      <div class="form-group">
+        <label for="message">Précisions</label>
+        <textarea id="message" name="message" rows="4">{{ devis.message or '' }}</textarea>
+      </div>
+      <button type="submit">Enregistrer les modifications</button>
+    </form>
+  </div>
+
+  <a class="back" href="{{ url_for('liste_devis') }}">← Retour à la liste</a>
+</div>
+</body>
+</html>

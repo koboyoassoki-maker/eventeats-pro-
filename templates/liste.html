@@ -24,6 +24,7 @@
           <th>Invités</th>
           <th>Date événement</th>
           <th>Reçu le</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +37,13 @@
           <td>{{ d.nombre_invites or '—' }}</td>
           <td>{{ d.date_evenement or '—' }}</td>
           <td>{{ d.date_creation.strftime('%d/%m/%Y %H:%M') }}</td>
+          <td>
+            <a href="{{ url_for('modifier_devis', devis_id=d.id) }}" style="color:var(--plum);margin-right:12px;">Modifier</a>
+            <form method="POST" action="{{ url_for('supprimer_devis', devis_id=d.id) }}" style="display:inline;"
+                  onsubmit="return confirm('Supprimer définitivement le devis de {{ d.nom }} ?');">
+              <button type="submit" style="background:none;color:#B4433C;border:none;padding:0;font-size:13.5px;cursor:pointer;text-decoration:underline;">Supprimer</button>
+            </form>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
